@@ -1,0 +1,20 @@
+.OpenMenu{
+    background: none;   
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+    color: #dbdbdb;
+    outline:none;
+    display: block;
+}
+
+.OpenMenu:hover{
+    color: white ;
+}
+
+@media (min-width: 501px){
+   
+    .OpenMenu{
+        display: none;
+    }
+}
