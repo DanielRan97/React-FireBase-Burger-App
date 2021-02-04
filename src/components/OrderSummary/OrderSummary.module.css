@@ -1,3 +1,7 @@
+.OrderSummary{
+    display: block;
+}
+
 .liSpan{
     text-transform: capitalize;
 }

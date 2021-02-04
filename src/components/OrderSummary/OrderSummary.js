@@ -2,6 +2,7 @@ import Aux from '../../hoc/Auxiliary/Auxiliary';
 import classes from './OrderSummary.module.css';
 import Button from '../UI/Button/Button';
 import PropType from 'prop-types';
+import WithClass from '../../hoc/withClass/withClass';
 
 const orderSummary = (props) => {
 
@@ -55,4 +56,4 @@ orderSummary.prototype = {
 
 }
 
-export default orderSummary;
+export default WithClass(orderSummary, classes.OrderSummary);
