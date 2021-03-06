@@ -4,7 +4,7 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import SummaryOrder from '../../components/OrderSummary/OrderSummary';
-import axios from '../../axios/axios-orders';
+import axios from '../../axios/Orders/axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 const INGREDIENT_PRICES = {
@@ -16,7 +16,7 @@ const INGREDIENT_PRICES = {
 
 const startPrice = 4;
 
-const BurgerBuilder = () => {
+const BurgerBuilder = (props) => {
     const [state, setState] = useState({
         ingredient:{
             salad:0,
@@ -51,15 +51,20 @@ const BurgerBuilder = () => {
             );
     };
 
-    useEffect(() => {
-            axios.get('/ingredients.json')
-            .then(response => {
-                setState({...state,ingredient: response.data})
-            }).catch(error => {
-                console.error(error);
-                setState({...state,error: true});
-            });
+    const getIngredientsFromDataBase = () => {
 
+        axios.get('/ingredients.json')
+        .then(response => {
+            setState(s => ({...s,ingredient: response.data,error: false}));
+        }).catch(error => {
+            console.error(error);
+            setState(s => ({...s,error : true}));
+        });
+
+    }
+
+    useEffect(() => {
+        getIngredientsFromDataBase();
     },[]);
 
     const addIngredient = (type) => {
@@ -105,33 +110,22 @@ const BurgerBuilder = () => {
 
     const purchasContinue = () => {
         setState({...state,spinner: true});
-            const order = {
-                ingrediant: state.ingredient,
-                price: state.totalPrice,
-                customer : {
-                    name: 'Daniel Ran',
-                    address:{
-                        street: 'King David 1',
-                        zipCode: '26464640',
-                        country: 'Germany'
-                    },
-                    email: 'dani@gmail.com',
-                },
-                deliveryMethod: 'fastest'
-            }
-           axios.post('/orders.json', order)
-           .then(response => {
-               console.log(response);
-               setState({...state,spinner: false, purchasFailed: false});
-            })
-           .catch(error => {
-            setState({...state,spinner: false, purchasFailed: true});
-            console.log(error);
-            }) 
+    
+        const queryParams = [];
+        for(let i in state.ingredient){
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(state.ingredient[i]));
+        }
+        queryParams.push(`price=${state.totalPrice}`)
+        const queryString = queryParams.join('&');
+        props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });   
+        setState({...state,spinner: false, purchasFailed: true}); 
     }
 
     const purchasCancel = () => {
-        setState({...state,purchasing: false})
+        setState({...state,purchasing: false});
     }
 
     const disabledInfo = {
@@ -144,14 +138,11 @@ const BurgerBuilder = () => {
 
     let orderSummary = <Spinner />;
 
-    let burger =  (
-        <Aux>
-            <Spinner />
-        </Aux>
-        )
+    let burger = <Spinner />
+
 
     if(state.ingredient){
-
+        
         burger =  (
             <Aux>
         {state.error === true ?

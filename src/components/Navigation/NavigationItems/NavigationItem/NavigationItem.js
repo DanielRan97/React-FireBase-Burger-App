@@ -1,26 +1,35 @@
 import classes from './NavigationItem.module.css';
 import PropType from 'prop-types';
+import { NavLink } from 'react-router-dom'
 
-const navigationItem = (props) => (
+const NavigationItem = (props) => {
 
-    <li className={classes.NavigationItem}>
-      
-        <a 
-            href={props.link}
-            className={props.active ? classes.active : null}>
-                {props.children}
-        </a>
-        
-    </li>
 
-);
+  return(
 
-navigationItem.prototype = {
+    <li className={props.link === props.page ? classes.NavigationItemSelected : classes.NavigationItem}>
+    <NavLink 
+     to={props.link}
+     onClick={() => props.clicked(props.link)}
+     >
+              
+          {props.children}
+   
+    </NavLink> 
+  </li>
+
+  );
+
+  };
+
+NavigationItem.prototype = {
 
     link: PropType.string,
     active: PropType.bool,
-    children: PropType.string
+    children: PropType.string,
+    page: PropType.string,
+    clicked: PropType.func
 
 }
 
-export default navigationItem;
+export default NavigationItem;

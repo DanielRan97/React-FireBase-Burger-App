@@ -1,13 +1,20 @@
 import Layout from '../hoc/Layout/Layout';
-import BurgerBuilder from '../containers/BurgerBuilder/BurgerBuilder';
+import AppRouter from '../App-Router/App-Router';
+import Aux from '../hoc/Auxiliary/Auxiliary';
 
 function App() {
   return (
-    <div className="App">
+
+    <Aux>
+    
      <Layout>
-       <BurgerBuilder />
+     
+      <AppRouter />
+     
      </Layout>
-    </div>
+    
+    </Aux>
+   
   );
 }
 
