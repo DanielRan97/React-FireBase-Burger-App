@@ -4,15 +4,24 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App/App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import{ createStore } from 'redux';
+import reducer from './store/reducer';
+
+const store = createStore(reducer);
 
 ReactDOM.render(
-  <React.StrictMode>
-        <BrowserRouter basename="/burger-app">
+
+  <Provider store={store}>
     
-    <App />
+    <BrowserRouter basename="/burger-app">
+    
+      <App />
 
     </BrowserRouter>
-  </React.StrictMode>,
+
+    </Provider>
+  ,
   document.getElementById('root')
 );
 

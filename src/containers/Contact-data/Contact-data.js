@@ -6,6 +6,7 @@ import Button from '../../components/UI/Button/Button';
 import axios from "../../axios/Orders/axios-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import Input from "../../components/UI/Input/Input";
+import { connect } from "react-redux";
 
 const ContactData = (props) => {
 
@@ -131,12 +132,16 @@ const ContactData = (props) => {
         for (let formElement in state.orderForm){
             formData[formElement] = state.orderForm[formElement].value
         }
+        
+        let fixPrice = props.price.toString().match(/^\d+\.?\d{0,2}/)[0]
+       
         const order = {
-            ingredients: props.ingredients,
-            price: props.price.match(/^\d+\.?\d{0,2}/)[0],
+            ingredients: props.ings,
+            price: fixPrice,
             orderData: formData
         }
-       axios.post('/orders.json', order)
+      
+        axios.post('/orders.json', order)
        .then(response => {
            setState({...state,spinner: false});
            props.history.push('/');
@@ -206,8 +211,16 @@ const ContactData = (props) => {
             </div>
                 
         </Aux>
-    )
+    );
 
+};
+
+const mapStateToProps = state => {
+
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
 }
 
-export default withClass(ContactData , classes.ContactData);
+export default connect(mapStateToProps)(withClass(ContactData , classes.ContactData));
