@@ -1,16 +1,11 @@
-import * as actionTypes from './actions';
-import axios from '../axios/Orders/axios-orders';
+import * as actionTypes from '../actions/actionsTypes';
 
 const startPrice = 4;
 
 const initialState = {
-    ingredients:{
-        salad:0,
-        bacon:0,
-        cheese:0,
-        meat:0
-    },
+    ingredients: null,
     totalPrice: startPrice,
+    error: false
 }
 
 const INGREDIENT_PRICES = {
@@ -21,7 +16,7 @@ const INGREDIENT_PRICES = {
 }
 
 
-const reducer = (state = initialState, action) => {
+const burgerBuilderReducer = (state = initialState, action) => {
     
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
@@ -48,9 +43,29 @@ const reducer = (state = initialState, action) => {
         
         }
 
+        case actionTypes.SET_INGREDIENT:
+            return{
+                ...state,
+                ingredients: {
+
+                    salad: action.ingredients.salad,
+                    bacon: action.ingredients.bacon,
+                    cheese: action.ingredients.cheese,
+                    meat: action.ingredients.meat
+
+                },
+                error: false
+            }
+
+        case actionTypes.FETCH_INGREDIENT_FAILED:
+            return{
+                ...state,
+                error: true
+            }
+
         default:
             return state;
     }
 };
 
-export default reducer;
+export default burgerBuilderReducer;

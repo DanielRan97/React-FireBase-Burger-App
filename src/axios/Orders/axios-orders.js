@@ -1,7 +1,10 @@
 import axsios from 'axios';
 
+
 const instance = axsios.create({
-    baseURL: 'https://burger-order-24691-default-rtdb.firebaseio.com/'
+    baseURL: `${process.env.REACT_APP_BURGER_API}`,
 })
+
+
 
 export default instance;
