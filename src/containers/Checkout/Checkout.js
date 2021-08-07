@@ -2,8 +2,7 @@ import { Route, Redirect } from 'react-router-dom';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from '../Contact-data/Contact-data';
 import { connect } from 'react-redux';
-import { useEffect } from 'react';
-import * as actions from '../../store/actions/index';
+
 
 const Checkout = (props) => {
 

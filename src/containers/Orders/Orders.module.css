@@ -3,3 +3,9 @@
     font-weight: bold;
     text-align: center;
 }
+
+.noOrders {
+    color: grey;
+    font-weight: bold;
+    text-align: center;
+}

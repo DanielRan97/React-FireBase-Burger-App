@@ -30,45 +30,6 @@ const BurgerBuilder = (props) => {
         return sum > 0;
     };
 
- 
-
-    // const addIngredient = (type) => {
-    //     const oldCount = state.ingredient[type];
-    //     const updateCount = oldCount + 1;
-    //     const updatIngredient = {
-    //         ...state.ingredient
-    //     };
-    //     updatIngredient[type] = updateCount;
-    //     const priceAddition =  props.price[type];
-    //     const oldPrice = state.totalPrice;
-    //     const newPrice = oldPrice + priceAddition;
-    //     setState(
-    //         {
-    //             ...state, 
-    //             totalPrice: newPrice, 
-    //             ingredient: updatIngredient
-    //         }
-    //         );
-    //     updatePurchaseState(updatIngredient,newPrice);
-    // }
-
-    // const removeIngredient = (type) => {
-    //     const oldCount = state.ingredient[type];
-    //     if (oldCount <= 0) {
-    //         return;
-    //     }
-    //     const updateCount = oldCount - 1;
-    //     const updatIngredient = {
-    //         ...state.ingredient
-    //     };
-    //     updatIngredient[type] = updateCount;
-    //     const priceDeduction =  props.price[type];
-    //     const oldPrice = state.totalPrice;
-    //     const newPrice = oldPrice - priceDeduction;
-    //     setState({...state, totalPrice: newPrice, ingredient: updatIngredient});
-    //     updatePurchaseState(updatIngredient,newPrice);
-    // }
-
     const purchas = () => {
         setState({...state,purchasing: true});
     }
