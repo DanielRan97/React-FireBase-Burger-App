@@ -1,12 +1,13 @@
 import * as actionTypes from '../actions/actionsTypes';
-import { updateObject } from '../utility/utility';
+import { updateObject } from '../utility/upadateObjUtility';
 
 const startPrice = 4;
 
 const initialState = {
     ingredients: null,
     totalPrice: startPrice,
-    error: false
+    error: false,
+    building: false
 }
 
 const INGREDIENT_PRICES = {
@@ -21,7 +22,8 @@ const addIngredient = (state, action) => {
     const updatedIngredients_ADD = updateObject(state.ingredients, updatedIngredient_ADD);
     const updatedState_ADD = {
         ingredients: updatedIngredients_ADD,
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+        building: true
     };
    return updateObject(state, updatedState_ADD);
 };
@@ -31,7 +33,8 @@ const removeIngredient = (state, action) => {
     const updatedIngredients_REMOVE = updateObject(state.ingredients, updatedIngredient_REMOVE);
     const updatedState_REMOVE = {
         ingredients: updatedIngredients_REMOVE,
-        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+        building: true
     };
    return updateObject(state, updatedState_REMOVE);
 };
@@ -47,7 +50,8 @@ const setIngredient = (state, action) => {
 
         },
         totalPrice: startPrice,
-        error: false
+        error: false,
+        building: false
     } );
 };
 

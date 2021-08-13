@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionsTypes';
-import { updateObject } from '../utility/utility';
+import { updateObject } from '../utility/upadateObjUtility';
 
 const initialState = {
     orders: [],
@@ -68,27 +68,6 @@ const fetchseOrderFail = (state) => {
 
 };
 
-const deleteOrderSuccess = (state, action) => {
-
-    let stateOrder = state.orders;
-
-    let filterOrder = stateOrder.filter(order => order.id !== action.orderId);
-    
-    return updateObject(state, { 
-        orders: filterOrder,
-        deleteOrderError: false
-    });
-
-};
-
-const deleteOrderFail = (state) => {
-
-    return updateObject(state, { 
-        deleteOrderError: true
-    });
-
-};
-
 const orderReducer = (state = initialState, action) => { 
 
     switch (action.type) {
@@ -106,10 +85,6 @@ const orderReducer = (state = initialState, action) => {
         case actionTypes.FETCH_ORDERS_SUCCESS: return fetchseOrderSuccess(state, action);
 
         case actionTypes.FETCH_ORDERS_FAIL: return fetchseOrderFail(state);
-
-        case actionTypes.DELETE_ORDER_SUCCESS: return deleteOrderSuccess(state, action);
-
-        case actionTypes.DELETE_ORDER_FAIL: return deleteOrderFail(state);
 
         default: return state;
     };

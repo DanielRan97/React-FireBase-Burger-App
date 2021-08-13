@@ -26,10 +26,10 @@ const buildControls = (props) => {
         })}
         <button 
         className={classes.OrderButton} 
-        disabled={!props.purchaseable}
         onClick={props.ordered}>
-            ORDER NOW
+           {props.isAuth ? 'ORDER NOW' : 'SIGN UP TO ORDER'}
         </button>
+
     </Aux>
    )
 
@@ -38,7 +38,6 @@ const buildControls = (props) => {
 buildControls.prototype = {
     ingredientAdded: PropType.func,
     ingredientRemove: PropType.func,
-    disabled: PropType.object,
     purchaseable: bool,
     ordered: PropType.func
 }

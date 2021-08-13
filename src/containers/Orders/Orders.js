@@ -10,7 +10,7 @@ const Orders = (props) => {
 
     useEffect(() => {
         
-        props.onFetchOrder();
+        props.onFetchOrder(props.token, props.userId);
     
     },[]);
 
@@ -45,7 +45,9 @@ const mapStateToProps = state => {
     return {
         orders: state.order.orders,
         loading: state.order.loading,
-        fetchOrderError: state.order.fetchOrderError
+        fetchOrderError: state.order.fetchOrderError,
+        token: state.auth.token,
+        userId: state.auth.userId
     }
 
 }
@@ -53,7 +55,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 
     return{
-        onFetchOrder: () => dispatch(actions.fetchOrders())
+        onFetchOrder: (token, userId) => dispatch(actions.fetchOrders(token, userId))
     };
 
 };

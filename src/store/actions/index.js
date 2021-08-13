@@ -8,5 +8,11 @@ export {
     purchaseBurger,
     parchaseInit,
     fetchOrders,
-    deleteOrder
 } from "./order";
+
+export {
+    auth,
+    logOut,
+    setAuthRedirectPath,
+    authCheckState
+} from "./auth";

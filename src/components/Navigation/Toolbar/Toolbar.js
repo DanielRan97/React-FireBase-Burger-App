@@ -20,7 +20,8 @@ const toolbar = (props) => (
       
         <nav className={classes.DesktopOnly}>
             <Switch>
-            <NavigationItems /> 
+            <NavigationItems 
+            isAuthenticated={props.isAuth}/> 
             </Switch>
         </nav>
    

@@ -75,7 +75,8 @@ const ContactData = (props) => {
                 validation: {
                     requierd: true,
                     minLength: 5,
-                    maxLength: 5
+                    maxLength: 5,
+                    postalCode: true
                 },
                 valid: false,
                 touched: false
@@ -113,6 +114,11 @@ const ContactData = (props) => {
             isValid = value.match(mailValidation) && isValid;
         }
 
+        if(rule.postalCode){
+            const onlyNumbersValidation = /[0-9]+/;
+            isValid = value.match(onlyNumbersValidation) && isValid;
+        }
+
         if(rule.minLength){
             isValid = value.length >= rule.minLength && isValid;
         }
@@ -123,7 +129,7 @@ const ContactData = (props) => {
 
         return isValid;
 
-    }
+    };
 
     const orderHandeler = () => {
 
@@ -135,14 +141,15 @@ const ContactData = (props) => {
         let fixPrice = props.price.toString().match(/^\d+\.?\d{0,2}/)[0]
        
         const order = {
+            userId: props.userId,
             ingredients: props.ings,
             price: fixPrice,
             orderData: formData
         }
  
-        props.onOrderBurger(order);
+        props.onOrderBurger(order, props.token);
         props.history.push('/');
-    }
+    };
 
     const inputChangeHandler = (event, inputId) => {
        const updatedOrderForm ={
@@ -162,7 +169,7 @@ const ContactData = (props) => {
             formIsValid =  updatedOrderForm[input].valid && formIsValid;
         }
         setState({...state, orderForm: updatedOrderForm, formIsValid: formIsValid});
-    }
+    };
 
     const formElementsArry = [];
 
@@ -187,6 +194,7 @@ const ContactData = (props) => {
          touched={formElement.config.touched}
          changed={(event) => inputChangeHandler(event, formElement.id)}/>
     ))}
+
     <Button btnType="Success" clicked={orderHandeler} disabled={!state.formIsValid}>ORDER</Button>
 
 </form>;
@@ -194,7 +202,7 @@ const ContactData = (props) => {
     return(
         <Aux>
             
-            <h4>Enter your data</h4>
+            <h3 className={classes.formTitle}>Enter your data</h3>
 
             <div className="orderBugerForm">
 
@@ -212,13 +220,15 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token,
+        userId: state.auth.userId
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return{
-        onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+        onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
     }
 };
 

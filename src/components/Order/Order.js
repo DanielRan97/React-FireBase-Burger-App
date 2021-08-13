@@ -1,11 +1,6 @@
 import Aux from "../../hoc/Auxiliary/Auxiliary";
 import classes from './Order.module.css';
 import withClass from '../../hoc/withClass/withClass';
-import Button from "../UI/Button/Button";
-import * as actions from '../../store/actions/index';
-import { connect } from "react-redux";
-import Moadal from "../UI/Modal/Modal";
-
 
 const order = (props) => {
 
@@ -30,22 +25,9 @@ const order = (props) => {
     
     getIngredients();
 
-    const deletePost = () => {
-        console.log('work alone');
-        console.log(order.id);
-        props.onDeleteOrder(order.id);
-
-    }
-
     return(
 
         <Aux>
-
-            <div className={classes.deleteButton}>
-
-                <Button btnType="Danger" clicked={deletePost}><i className="fas fa-minus-square"></i></Button>
-
-            </div>
 
             <p className={classes.ingredientsP}>Ingredients:</p>
 
@@ -64,10 +46,4 @@ const order = (props) => {
    
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onDeleteOrder: (orderId) => dispatch(actions.deleteOrder(orderId))
-    };
-}
-
-export default connect(null, mapDispatchToProps) (withClass(order, classes.Order));
+export default withClass(order, classes.Order);

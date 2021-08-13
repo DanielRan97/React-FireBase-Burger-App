@@ -22,13 +22,16 @@ const NavigationItems = (props) => {
         <div>
    
     <ul className={classes.NavigationItems}>
-        <NavigationItem link="/burger" 
-        clicked={getPage} 
-        page={state.page}>Burger Builder</NavigationItem> 
-        
-        <NavigationItem link="/orders" 
-        clicked={getPage} 
-        page={state.page}>Orders</NavigationItem> 
+        <NavigationItem link="/burger" clicked={getPage} page={state.page} exact>Burger Builder</NavigationItem> 
+    
+    {props.isAuthenticated ?
+        <NavigationItem link="/orders" clicked={getPage} page={state.page}>Orders</NavigationItem> :null
+    }
+
+    {!props.isAuthenticated ? 
+       <NavigationItem link="/auth" clicked={getPage} page={state.page}>Authenticate</NavigationItem>:
+       <NavigationItem link="/logout" clicked={getPage} page={state.page}>Logout</NavigationItem>
+    }
     </ul>
    
     </div>

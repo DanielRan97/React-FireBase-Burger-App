@@ -19,7 +19,6 @@ const input = (props) => {
             {...props.elememntConfig} 
             value={props.value}
             onChange={props.changed}/>
-           
             break;
 
         case ('textarea'):
