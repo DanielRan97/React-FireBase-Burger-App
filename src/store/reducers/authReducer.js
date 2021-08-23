@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionsTypes';
-import {updateObject} from '../utility/upadateObjUtility';
+import { updateObject } from '../../utility/upadateObjUtility';
 
 const initialState = {
 
@@ -7,7 +7,7 @@ const initialState = {
     userId: null,
     error: null,
     loading: false,
-    authRedirectPath: '/'
+    authPurchase: false
 
 };
 
@@ -18,11 +18,13 @@ const authStart = (state) => {
 
 const authSuccess = (state, action) => {
 
+    
     return updateObject(state, { 
         token: action.idToken,
         userId: action.userId,
         error: null,
-        loading: false
+        loading: false,
+        authPurchase: true
      });
 
 };
@@ -41,9 +43,11 @@ const authLogOut = (state) => {
 
 };
 
-const setAuthRedirectPath = (state, action) => {
-    return updateObject(state,  { authRedirectPath: action.path })
-}
+const stopAuthPurchase = (state) => {
+
+    return updateObject(state,  { authPurchase: false });
+
+};
 
 const authReducer = (state = initialState, action) => {
 
@@ -57,7 +61,7 @@ const authReducer = (state = initialState, action) => {
 
         case actionTypes.AUTH_LOGOUT: return authLogOut(state);
 
-        case actionTypes.SET_AUTH_REDIRECT_PATH: return setAuthRedirectPath(state, action);
+        case actionTypes.STOP_AUTH_PURCHASE: return stopAuthPurchase(state);
                 
         default: return state;
     };

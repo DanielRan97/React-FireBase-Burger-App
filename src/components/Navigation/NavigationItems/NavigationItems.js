@@ -1,6 +1,7 @@
 import classes from './NavigationItems.module.css';
 import NavigationItem from './NavigationItem/NavigationItem';
 import { useState, useEffect } from 'react';
+import PropType from 'prop-types';
 
 const NavigationItems = (props) => {
     
@@ -37,6 +38,12 @@ const NavigationItems = (props) => {
     </div>
     );
    
+};
+
+NavigationItems.prototype = {
+
+    clicked: PropType.func
+
 };
 
 export default NavigationItems;

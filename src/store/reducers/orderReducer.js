@@ -1,12 +1,14 @@
 import * as actionTypes from '../actions/actionsTypes';
-import { updateObject } from '../utility/upadateObjUtility';
+import { updateObject } from '../../utility/upadateObjUtility';
 
 const initialState = {
     orders: [],
     loadin: false,
     purchased: false,
     fetchOrderError: false,
-    deleteOrderError:false
+    loadingDeleteOrder:false,
+    deleteOrderError: false
+
 };
 
 const purchaseInit = (state) => {
@@ -68,6 +70,36 @@ const fetchseOrderFail = (state) => {
 
 };
 
+const deleteOrderStart = (state) => {
+    
+    return updateObject(state, {
+        loadingDeleteOrder: true,
+        deleteOrderError: false
+    });
+
+};
+
+const deleteOrderSuccess = (state, action) => {
+
+    let updateOrders = state.orders.filter((el => el.id !== action.orderId));
+    console.log(updateOrders);
+    return updateObject(state, {
+        orders : updateOrders,
+        loadingDeleteOrder: false,
+        deleteOrderError: false
+    });
+
+};
+
+const deleteOrderFail = (state) => {
+    
+    return updateObject(state, {
+        loadingDeleteOrder: false,
+        deleteOrderError: true
+    });
+
+};
+
 const orderReducer = (state = initialState, action) => { 
 
     switch (action.type) {
@@ -85,6 +117,12 @@ const orderReducer = (state = initialState, action) => {
         case actionTypes.FETCH_ORDERS_SUCCESS: return fetchseOrderSuccess(state, action);
 
         case actionTypes.FETCH_ORDERS_FAIL: return fetchseOrderFail(state);
+
+        case actionTypes.DELETE_ORDER_START: return deleteOrderStart(state);
+
+        case actionTypes.DELETE_ORDER_SUCCESS: return deleteOrderSuccess(state, action);
+
+        case actionTypes.DELETE_ORDER_FAIL: return deleteOrderFail(state);
 
         default: return state;
     };

@@ -66,6 +66,6 @@ return(
 
 )
 
-}
+};
 
 export default withClass(input, classes.Input);

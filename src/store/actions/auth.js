@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionsTypes';
-import { authErrorFix } from '../utility/authFormErrUtility';
+import { authErrorFix } from '../../utility/authFormErrUtility';
 
 export const authStart = () => {
 
@@ -18,6 +18,13 @@ export const authSuccess = (token, userId) => {
         userId
     };
 
+};
+
+export const stopAuthPurchase = () => {
+
+    return {
+        type: actionTypes.STOP_AUTH_PURCHASE
+    };
 };
 
 export const authFail = (error) => {
@@ -81,21 +88,10 @@ export const auth = (email, password, isSignUp) => {
             dispatch(checkAuthTimeOut(data.expiresIn));
         }).catch(error => {
             let err = error.response.data.error.message;
-            console.log(err);
             let errorFix = authErrorFix(err);
-            console.log(errorFix);
             dispatch(authFail(errorFix));
         });
     };
-};
-
-export const setAuthRedirectPath = path => {
-
-    return {
-        type: actionTypes.SET_AUTH_REDIRECT_PATH,
-        path
-    };
-
 };
 
 export const authCheckState = () => {

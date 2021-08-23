@@ -8,6 +8,8 @@ import * as action from '../../store/actions/index';
 import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { Redirect } from 'react-router';
+import { checkFormsValidations } from '../../utility/checkFormsValidationsUtility';
+
 
 const Auth = (props) => {
 
@@ -48,48 +50,6 @@ const Auth = (props) => {
 
     });
 
-    const checkIfValid = (value, rule) => {
-        
-        let isValid = true;
-
-        if(!rule){
-            return isValid;
-        }
-
-        if(rule.requierd){
-            isValid = value.trim() !== '' && isValid;
-        }
-
-        if(rule.email){
-            const mailValidation = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-            isValid = value.match(mailValidation) && isValid;
-        }
-
-        if(rule.postalCode){
-            const onlyNumbersValidation = /[0-9]+/;
-            isValid = value.match(onlyNumbersValidation) && isValid;
-        }
-
-        if(rule.minLength){
-            isValid = value.length >= rule.minLength && isValid;
-        }
-
-        if(rule.maxLength){
-            isValid = value.length <= rule.maxLength && isValid;
-        }
-        
-        return isValid;
-
-    };
-
-    useEffect(() => {
-        if(props.buildingBurger && props.authRedirectPath !=='/') {
-
-            props.onSetAuthRedirectPath(props.authRedirectPath);
-
-        }
-    }, []);
-
     const inputChangeHandler = (event, inputlName) => {
         
         const updatedAuthForm ={
@@ -99,7 +59,7 @@ const Auth = (props) => {
             ...updatedAuthForm[inputlName]
          };
          updatedFormElement.value = event.target.value;
-         updatedFormElement.valid = checkIfValid(updatedFormElement.value, updatedFormElement.validation);
+         updatedFormElement.valid = checkFormsValidations(updatedFormElement.value, updatedFormElement.validation);
          updatedFormElement.touched = true;
          updatedAuthForm[inputlName] = updatedFormElement;
          
@@ -137,12 +97,6 @@ const Auth = (props) => {
         form = <Spinner></Spinner>
     }
 
-    const sumitHandeler = () => {
-        
-        props.onAuth(state.authForm.email.value, state.authForm.password.value, state.isSignUp);
-
-    }
-
     const switchAuthModeHandeler = () => {
 
 
@@ -165,8 +119,14 @@ const Auth = (props) => {
     let authRedirect = null;
 
     if(props.isAuthenticated) {
-
+ 
         authRedirect = <Redirect to={props.authRedirectPath} />
+
+    };
+
+    const sumitHandeler = () => {
+
+        props.onAuth(state.authForm.email.value, state.authForm.password.value, state.isSignUp);
 
     };
 
@@ -207,11 +167,11 @@ const Auth = (props) => {
 const mapStarteToPros = state => {
 
     return {
+        ings: state.burgerBuilder.ingredients,
         loading: state.auth.loading,
         error: state.auth.error,
         isAuthenticated: state.auth.token !== null,
         buildingBurger: state.burgerBuilder.building,
-        authRedirectPath: state.auth.authRedirectPath
     }
 
 }
@@ -220,7 +180,6 @@ const mapDispatchToProps = dispatch => {
 
     return {
         onAuth: (email, password, isSignUp) => dispatch(action.auth(email, password, isSignUp)),
-        onSetAuthRedirectPath: (path) => dispatch(action.setAuthRedirectPath(path))
     };
 };
 

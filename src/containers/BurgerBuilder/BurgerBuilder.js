@@ -14,8 +14,20 @@ const BurgerBuilder = (props) => {
         purchasFailed: false,
     });
 
+const checkIfAuthPurchase = () => {
+
+   if(props.authPurchase && props.ings !== null && props.buildingBurger !== false){
+         props.history.push('/checkout')
+   } 
+
+};
+
     useEffect(() => {
-        props.onInitIngredients();
+        if(!props.ings){
+            props.onInitIngredients();
+        };
+
+        checkIfAuthPurchase();
     }, []);
 
  
@@ -36,14 +48,9 @@ const BurgerBuilder = (props) => {
             setState({...state,purchasing: true}) 
 
         }else {
-            if(props.buildingBurger){
-                props.onSetRedirectPath('/checkout')
-                props.history.push('/auth');
-            }else{
-                props.onSetRedirectPath('/')
-                props.history.push('/auth');
-            };
 
+            props.history.push('/auth');
+        
         };
     };
 
@@ -69,6 +76,7 @@ const BurgerBuilder = (props) => {
     let orderSummary = <Spinner />;
 
     let burger = <Spinner />
+    
 
     if(props.ings || props.error === true){
         
@@ -115,6 +123,7 @@ const BurgerBuilder = (props) => {
             <Modal show={state.purchasing} modalClosed={purchasCancel}>
                
                 {props.error === false ? orderSummary : <Spinner />}
+                
             </Modal>
 
             {burger}
@@ -130,6 +139,8 @@ const mapStateToProps = state => {
         error: state.burgerBuilder.error,
         isAuthenticated : state.auth.token !== null,
         buildingBurger: state.burgerBuilder.building,
+        authRedirectPath: state.auth.authRedirectPath,
+        authPurchase: state.auth.authPurchase
     };
 }
 
@@ -140,7 +151,6 @@ const mapDispatchToProps = dispatch => {
         onIngredientRemoved: (ingName) => dispatch (actions.removeIngredient(ingName)),
         onInitIngredients: () => dispatch(actions.initIngredients()),
         onInitPurchase : () => dispatch(actions.parchaseInit()),
-        onSetRedirectPath : (path) => dispatch(actions.setAuthRedirectPath(path))
     };
 }
 

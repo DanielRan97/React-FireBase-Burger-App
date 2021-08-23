@@ -15,9 +15,8 @@ const AppRouter = (props) => {
 
         <Switch>
             <Route path="/" exact component={AsyncBurger}  />
-            <Route path="/burger" exact component={AsyncBurger}  />
             <Route path="/auth" component={AsyncAuth}  />
-            <Redirect to="/burger"/>
+            <Redirect to="/"/>
             <Route render={() => <PageNotFound/> } />
         </Switch>
         );
@@ -26,11 +25,10 @@ const AppRouter = (props) => {
           routes = (
             <Switch>
                 <Route path="/" exact component={AsyncBurger}  />
-                <Route path="/burger" exact component={AsyncBurger}  />
                 <Route path="/checkout" component={AsyncCheckout}  />
                 <Route path="/orders" component={AsyncOrders}  />
                 <Route path="/logout" component={AsyncLogout}  /> 
-                <Redirect to="/burger"/>
+                <Redirect to="/"/>
                 <Route render={() => <PageNotFound/> } />
             </Switch>
           );

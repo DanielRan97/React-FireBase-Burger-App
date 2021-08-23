@@ -24,9 +24,9 @@ export const purchaseBurgerStart = () => {
 
     return {
         type: actionTypes.PURCHASE_BURGER_START
-    }
+    };
 
-}
+};
 
 export const purchaseBurger = ( orderData, token ) => {
     
@@ -102,6 +102,46 @@ export const fetchOrders = (token, userId) => {
         });
         
     };
+};
+
+export const deleteOrderStart = () => {
+    
+    return {
+        type: actionTypes.DELETE_ORDER_START
+    }
+}
+
+export const deleteOrderSuccess = (orderId) => {
+
+    return {
+        type: actionTypes.DELETE_ORDER_SUCCESS,
+        orderId
+    };
+
+};
+
+
+export const deleteOrderFail = (error) => {
+
+    return {
+        type: actionTypes.DELETE_ORDER_FAIL,
+        error
+    };
+
+};
+
+export const deleteOrder = (id,token) => {
+
+    return dispatch => {
+        dispatch(deleteOrderStart());
+        axios.delete(`/orders/${id}.json?auth=${token}`).then((res) => {
+            dispatch(deleteOrderSuccess(id));
+        }).catch(error => {
+            dispatch(deleteOrderFail(error));
+        });
+        
+    };
+
 };
 
 
