@@ -99,7 +99,6 @@ const ContactData = (props) => {
         formIsValid : false
     });
 
-
     const orderHandeler = () => {
 
         const formData = {};
@@ -117,6 +116,7 @@ const ContactData = (props) => {
         }
  
         props.onOrderBurger(order, props.token);
+        props.onOrderMessage('Success', 'Your order has been successfully completed');
         props.history.push('/');
     };
 
@@ -199,7 +199,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
+        onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token)),
+        onOrderMessage: (type, text) => dispatch(actions.message(type, text))
     }
 };
 

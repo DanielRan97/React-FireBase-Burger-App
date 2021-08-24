@@ -17,3 +17,7 @@ export {
     authCheckState,
     stopAuthPurchase
 } from "./auth";
+
+export { 
+    message
+} from './message'

@@ -16,6 +16,6 @@ button.prototype = {
     clicked: PropType.func,
     btnType: PropType.string    
 
-}
+};
 
 export default button;

@@ -10,7 +10,11 @@ import Button from '../../components/UI/Button/Button';
 
 const Orders = (props) => {
 
-    const [showDeleteOrderModalState, setshowDeleteOrderModalState] = useState ({showModal: false, orderId:0});
+    const [state, setState] = useState ({
+        showModal: false, orderId:0,
+        modalButtonDisabled: false,
+        modalLoading: false
+        });
 
     useEffect(() => {
         
@@ -20,23 +24,29 @@ const Orders = (props) => {
 
     const showRemoveModal = (orderId) => {
 
-        setshowDeleteOrderModalState({...showDeleteOrderModalState, showModal: true, orderId})
+        setState({...state, showModal: true, orderId})
 
     };
 
+    let deleteModalContent = state.modalLoading === false? <p>Are you sure you want to delete the order?</p> : <Spinner />;
+
     const removeModalCancel = () => {
 
-        setshowDeleteOrderModalState({...showDeleteOrderModalState,showModal: false});
+        setState({...state,showModal: false, modalButtonDisabled: false, modalLoading: false, orderId: 0 });
 
     };
 
     const deleteOrder = (token) => {
 
+        setState({ ...state, modalButtonDisabled: true, modalLoading: true });
+
         token = props.token;
 
-        props.onDeleteOrder(showDeleteOrderModalState.orderId, token);
+        props.onDeleteOrder(state.orderId, token);
 
         removeModalCancel();
+
+        props.onOrderMessage('Danger', 'Your order has been successfully deleted');
 
     };
 
@@ -58,17 +68,19 @@ const Orders = (props) => {
 
         <Aux>
 
-        <Modal show={showDeleteOrderModalState.showModal} modalClosed={removeModalCancel}>
+        <Modal show={state.showModal} modalClosed={removeModalCancel}>
             
-        <p>Are you sure you want to delete the order?</p>
+            {deleteModalContent}
 
         <Button btnType={'Danger'} 
-             clicked={removeModalCancel}>
+             clicked={removeModalCancel}
+             disabled={state.modalButtonDisabled}>
                   <i className="fas fa-arrow-left"></i>
             </Button>
             
             <Button btnType={'Danger'} 
-             clicked={deleteOrder}>
+             clicked={deleteOrder}
+             disabled={state.modalButtonDisabled}>
                   <i className="fas fa-trash-alt"></i>
             </Button>
 
@@ -102,7 +114,8 @@ const mapDispatchToProps = dispatch => {
 
     return{
         onFetchOrder: (token, userId) => dispatch(actions.fetchOrders(token, userId)),
-        onDeleteOrder: (id,token) => dispatch(actions.deleteOrder(id,token))
+        onDeleteOrder: (id,token) => dispatch(actions.deleteOrder(id,token)),
+        onOrderMessage: (type, text) => dispatch(actions.message(type, text))
     };
 
 };

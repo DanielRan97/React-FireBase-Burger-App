@@ -82,7 +82,7 @@ const deleteOrderStart = (state) => {
 const deleteOrderSuccess = (state, action) => {
 
     let updateOrders = state.orders.filter((el => el.id !== action.orderId));
-    console.log(updateOrders);
+
     return updateObject(state, {
         orders : updateOrders,
         loadingDeleteOrder: false,

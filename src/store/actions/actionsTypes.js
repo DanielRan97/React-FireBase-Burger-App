@@ -28,3 +28,7 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
 export const STOP_AUTH_PURCHASE = 'STOP_AUTH_PURCHASE';
+
+//Alert
+export const MESSAGE = 'MESSAGE';
+export const RESET_MESSAGE = 'RESET_MESSAGE';

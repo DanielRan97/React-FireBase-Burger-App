@@ -1,0 +1,32 @@
+.message {
+    position: fixed;
+    top: 90px;
+    right: 1px;
+    height: 42px;
+    min-width: 140px;
+    z-index: 300;
+    text-align: center;
+    color: white;
+}
+
+.messageBackGround {
+    height: 100%;
+    width: 100%;
+    padding: 4px;
+}
+
+.Success {
+    background-color: green;
+}
+
+.Danger {
+    background-color: red;
+}
+
+.text {
+    color: white;
+    line-height: 0.8;
+    display: inline-block;
+    vertical-align: middle;
+
+}
