@@ -3,6 +3,8 @@ import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import WithClass from '../../../hoc/withClass/withClass';
 import BuildControl from './BuildControl/BuildControl'
 import PropType, { bool } from 'prop-types';
+import * as actions from '../../../store/actions/index';
+import { connect } from 'react-redux';
 
 const buildControls = (props) => {
     
@@ -12,6 +14,12 @@ const buildControls = (props) => {
         { label:'Cheese', type:'cheese' },
         { label:'Meat', type:'meat' }
     ];
+
+    const resetBurger = () => {
+
+        props.onResetBurger();
+
+    };
    
    return(
     <Aux>
@@ -24,6 +32,15 @@ const buildControls = (props) => {
                     remove={() => props.ingredientRemove(ctrl.type)} 
                     disabled={props.disabled[ctrl.type]}/>
         })}
+
+        {props.build ? <button 
+        className={classes.resetButton} 
+        onClick={resetBurger}
+        disabled={!props.build}>
+          <i className="fas fa-undo"></i>
+        </button>: 
+        null}
+
         <button 
         className={classes.OrderButton} 
         onClick={props.ordered}>
@@ -40,6 +57,22 @@ buildControls.prototype = {
     ingredientRemove: PropType.func,
     purchaseable: bool,
     ordered: PropType.func
-}
+};
 
-export default WithClass(buildControls, classes.BuildControls )
+const mapStateToProps = state => {
+
+    return {
+        build: state.burgerBuilder.building
+    };
+
+};
+
+const mapDispatchToProps = dispatch => {
+
+    return {
+        onResetBurger: () => dispatch(actions.initIngredients())
+    };
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (WithClass(buildControls, classes.BuildControls));

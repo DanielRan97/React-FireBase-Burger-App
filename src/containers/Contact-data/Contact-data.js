@@ -117,6 +117,7 @@ const ContactData = (props) => {
  
         props.onOrderBurger(order, props.token);
         props.onOrderMessage('Success', 'Your order has been successfully completed');
+        props.onResetIngs();
         props.history.push('/');
     };
 
@@ -200,6 +201,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return{
         onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token)),
+        onResetIngs:() => dispatch(actions.initIngredients()),
         onOrderMessage: (type, text) => dispatch(actions.message(type, text))
     }
 };

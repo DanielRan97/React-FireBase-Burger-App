@@ -13,6 +13,7 @@
     height: 100%;
     width: 100%;
     padding: 4px;
+    border: solid black 3px;
 }
 
 .Success {

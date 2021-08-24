@@ -17,13 +17,21 @@ const NavigationItems = (props) => {
     const getPage = (link) => {
         setState({...state,page: link})
         
-    }
+    };
+
+    let pathname = window.location.pathname.split("/").pop();
+    
+    if(pathname == '' || pathname == 'burger'){
+      pathname = '/burger'
+    } else {
+        pathname = '/';
+    };
 
     return(
         <div>
    
     <ul className={classes.NavigationItems}>
-        <NavigationItem link="/burger" clicked={getPage} page={state.page} exact>Burger Builder</NavigationItem> 
+        <NavigationItem link="/burger" clicked={getPage} page={pathname} exact>Burger Builder</NavigationItem> 
     
     {props.isAuthenticated ?
         <NavigationItem link="/orders" clicked={getPage} page={state.page}>Orders</NavigationItem> :null

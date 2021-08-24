@@ -7,6 +7,7 @@
     box-shadow: 0 2px 1px #ccc;
     margin: auto;
     padding: 10px 0;
+    position: relative;
 }
 
 .OrderButton {
@@ -38,6 +39,38 @@
 .OrderButton:not(:disabled) {
     animation: enable 0.3s linear;
 }
+
+.resetButton {
+    position: absolute;
+    top: 48px;
+    right: 0px;
+    background: #cf8f2e;
+    margin: 5px;
+    height: 27px;
+    width: 30pxx;
+    border-radius: 100px;
+    border: black solid 1px;
+    outline: none;
+    color: black;
+    cursor: pointer;
+    text-align: center;
+}
+
+.resetButton:hover {
+    background: black;
+    color: #cf8f2e;
+}
+
+.resetButton:active {
+    background: #cf8f2e;
+    color: black;
+}
+
+.resetButton:disabled {
+    background: grey;
+    color: rgba(0, 0, 0, 0.212);
+}
+
 
 @keyframes enable {
     0% {

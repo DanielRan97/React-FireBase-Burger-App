@@ -1,7 +1,8 @@
 export {
     addIngredient,
     removeIngredient,
-    initIngredients
+    initIngredients,
+    setIngredients
 } from "./burgerbulder";
 
 export {
@@ -19,5 +20,6 @@ export {
 } from "./auth";
 
 export { 
-    message
+    message,
+    resetMessage
 } from './message'
