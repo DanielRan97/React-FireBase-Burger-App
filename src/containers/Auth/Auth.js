@@ -9,43 +9,14 @@ import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { Redirect } from 'react-router';
 import { checkFormsValidations } from '../../utility/checkFormsValidationsUtility';
+import authForm from '../../forms/authForm';
 
 
 const Auth = (props) => {
 
     const [state, setState] = useState({
 
-        authForm:{
-            email: {
-                elementType : 'input',
-                elememntConfig : {
-                    type: 'email',
-                    placeholder: 'Mail Adress'
-                },
-                value: '',
-                validation: {
-                    requierd: true,
-                    email: true
-                },
-                valid: false,
-                touched: false
-            },
-            password: {
-                elementType : 'input',
-                elememntConfig : {
-                    type: 'password',
-                    placeholder: 'Password'
-                },
-                value: '',
-                validation: {
-                    requierd: true,
-                    minLength: 6
-                },
-                valid: false,
-                touched: false
-            }
-        },
-        formIsValid : false,
+        ...authForm,
         isSignUp : true
 
     });
@@ -95,7 +66,7 @@ const Auth = (props) => {
 
     if(props.loading){
         form = <Spinner></Spinner>
-    }
+    };
 
     const switchAuthModeHandeler = () => {
 

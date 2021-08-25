@@ -12,7 +12,6 @@
 .messageBackGround {
     height: 100%;
     width: 100%;
-    padding: 4px;
     border: solid black 3px;
 }
 
@@ -29,5 +28,5 @@
     line-height: 0.8;
     display: inline-block;
     vertical-align: middle;
-
+    margin-right: 20px;
 }
