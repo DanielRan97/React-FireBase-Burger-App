@@ -3,11 +3,8 @@ import classes from './Order.module.css';
 import withClass from '../../hoc/withClass/withClass';
 import { prototype } from 'case-sensitive-paths-webpack-plugin';
 import  Button  from '../UI/Button/Button';
-import { useState } from "react";
 
 const Order = (props) => {
-
-    const [showModalState, setshowModalState] = useState({showModal : props.showModal});
 
     let order = props.order;
 

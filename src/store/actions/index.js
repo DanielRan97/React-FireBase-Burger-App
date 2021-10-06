@@ -16,7 +16,9 @@ export {
     auth,
     logOut,
     authCheckState,
-    stopAuthPurchase
+    stopAuthPurchase,
+    didntAuthNow,
+    getCurrentUser
 } from "./auth";
 
 export { 

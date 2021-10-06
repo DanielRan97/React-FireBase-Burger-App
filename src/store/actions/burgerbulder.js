@@ -1,4 +1,4 @@
-import axios from "../../axios/Orders/axios-orders";
+import axios from "../../axios/Data-base/axios-dataBase";
 import * as actionTypes from "./actionsTypes";
 
 export const addIngredient = (name) => {

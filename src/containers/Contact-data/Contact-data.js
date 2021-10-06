@@ -34,7 +34,7 @@ const ContactData = (props) => {
         }
  
         props.onOrderBurger(order, props.token);
-        props.onOrderMessage('Success', 'Your order has been successfully completed');
+        props.onOrderMessage('Success', 'Your order has been successfully completed', props.showMessagec);
         props.onResetIngs();
         props.history.push('/');
     };
@@ -112,7 +112,8 @@ const mapStateToProps = state => {
         price: state.burgerBuilder.totalPrice,
         loading: state.order.loading,
         token: state.auth.token,
-        userId: state.auth.userId
+        userId: state.auth.userId,
+        showMessage: state.message.showMessage
     }
 };
 
@@ -120,7 +121,7 @@ const mapDispatchToProps = dispatch => {
     return{
         onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token)),
         onResetIngs:() => dispatch(actions.initIngredients()),
-        onOrderMessage: (type, text) => dispatch(actions.message(type, text))
+        onOrderMessage: (type, text, showMessage) => dispatch(actions.message(type, text, showMessage))
     }
 };
 

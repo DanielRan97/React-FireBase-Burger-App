@@ -1,6 +1,4 @@
-import WithClass from '../../../hoc/withClass/withClass';
 import classes from './Message.module.css';
-import Aux from "../../../hoc/Auxiliary/Auxiliary";
 import PropType from 'prop-types';
 import {Animated} from "react-animated-css";
 import Button from '../Button/Button';

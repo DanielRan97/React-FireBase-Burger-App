@@ -6,20 +6,23 @@ import * as actions from '../store/actions/index';
 import { useEffect } from 'react';
 import Message from '../components/UI/Message/Message';
 
+
 function App(props) {
 
+  const {onTryAutoSignUp} = props;
+
   useEffect(() => {
-    props.onTryAutoSignUp();
-  },[]);
+    onTryAutoSignUp();
+  },[onTryAutoSignUp]);
 
   let showMessage = null;
   
   if(props.showMessage){
     if(props.messageType === 'Success'){
-      showMessage = <Message messageType={props.messageType}>{props.messageText} <i className="fas fa-check"></i></Message>
+      showMessage = <Message messageType={props.messageType}>{props.messageText}</Message>
     } 
     if(props.messageType === 'Danger'){
-      showMessage = <Message messageType={props.messageType}>{props.messageText} <i className="fas fa-trash-alt"></i></Message>
+      showMessage = <Message messageType={props.messageType}>{props.messageText}</Message>
     };
   } else {
     showMessage = null;
@@ -47,7 +50,7 @@ const mapStateToProps = state => {
   return{
     showMessage: state.message.showMessage,
     messageType: state.message.messageType,
-    messageText: state.message.messageText
+    messageText: state.message.messageText,
   };
 
 };
@@ -55,7 +58,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 
   return {
-    onTryAutoSignUp: () => dispatch(actions.authCheckState())
+    onTryAutoSignUp: () => dispatch(actions.authCheckState()),
   };
 
 };

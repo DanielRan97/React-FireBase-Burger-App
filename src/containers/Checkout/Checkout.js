@@ -7,10 +7,14 @@ import * as actionTypes from '../../store/actions/index';
 
 
 const Checkout = (props) => {
+
+    const {onStopAuthPurchase} = props;
     
     useEffect(() => {
-        props.onStopAuthPurchase()
-    }, []);
+        
+        onStopAuthPurchase();
+
+    }, [onStopAuthPurchase]);
     
     const checkoutContinuedHandeler = () => {
         props.history.replace(`/checkout/contact-data`);

@@ -10,12 +10,56 @@ export const authStart = () => {
 
 };
 
-export const authSuccess = (token, userId) => {
+
+
+export const getCurrentUser = () => {
+
+    return dispatch => {
+
+        let url = process.env.REACT_APP_FIRE_BASE_USER_DATA;
+        const token = localStorage.getItem('burgerAppAuthToken');
+        let email = undefined;
+        let userError = false
     
+        axios.post(url, {idToken: token}).then(response => {
+           email = response.data.users[0].email;
+           localStorage.setItem('burgerAppAuthEmail', email);
+           dispatch(updateCurrebtUser(email,userError));
+        }).catch(error => {
+            email = undefined;
+            userError = true
+            dispatch(updateCurrebtUser(email,userError));
+        });
+
+    }
+
+};
+
+export const updateCurrebtUser = (email, userError) => {
+
+    return{
+        type: actionTypes.UPDATE_AUTH_CURRENT_USER,
+        email,
+        getUserError: userError
+    }
+
+};
+
+export const authSuccess = (token, userId, email) => {
+
+    let checkIfEmail = localStorage.getItem('burgerAppAuthEmail');
+    
+    if(checkIfEmail){
+        email = checkIfEmail;
+    } 
+
+    localStorage.setItem('burgerAppAuthNow', true);
+
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: token,
-        userId
+        userId,
+        email
     };
 
 };
@@ -36,11 +80,20 @@ export const authFail = (error) => {
 
 };
 
-export const logOut = () => {
+export const didntAuthNow = () => {
 
+    return {
+        type: actionTypes.DIDNT_AUTH_NOW
+    };
+
+};
+
+export const logOut = () => {
+    
     localStorage.removeItem('burgerAppAuthToken');
     localStorage.removeItem('burgerAppAuthExpirationDate');
     localStorage.removeItem('burgerAppAuthUderId');
+    localStorage.removeItem('burgerAppAuthEmail');
 
     return{
         type: actionTypes.AUTH_LOGOUT
@@ -62,7 +115,7 @@ export const checkAuthTimeOut = expirationTime => {
 export const auth = (email, password, isSignUp) => {
 
     return dispatch => {
-
+        
         dispatch(authStart());
         const authData = {
             email,
@@ -84,12 +137,14 @@ export const auth = (email, password, isSignUp) => {
             localStorage.setItem('burgerAppAuthToken', response.data.idToken);
             localStorage.setItem('burgerAppAuthExpirationDate', expirationDate);
             localStorage.setItem('burgerAppAuthUderId', response.data.localId);
-            dispatch(authSuccess(data.idToken, data.localId));
+            dispatch(authSuccess(data.idToken, data.localId, authData.email));
+            dispatch(getCurrentUser());
             dispatch(checkAuthTimeOut(data.expiresIn));
         }).catch(error => {
             let err = error.response.data.error.message;
             let errorFix = authErrorFix(err);
             dispatch(authFail(errorFix));
+
         });
     };
 };

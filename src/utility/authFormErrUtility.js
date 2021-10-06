@@ -1,6 +1,6 @@
 export const authErrorFix = (err) => {
 
-    let errorFixed = null;
+    let errorFixed = err;
 
     switch (err) {
 
@@ -18,7 +18,7 @@ export const authErrorFix = (err) => {
 
         case 'TOO_MANY_ATTEMPTS_TRY_LATER': return errorFixed = 'We have blocked all requests from this device due to unusual activity. Try again later';
             
-        default: return err;
+        default: return errorFixed;
     };
 
 };

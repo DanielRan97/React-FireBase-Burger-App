@@ -21,17 +21,27 @@ export const messageStart = (messageType, messageText) => {
 
 };
 
-export const message = (messageType, messageText) => {
+export const message = (messageType, messageText, showMessage) => {
     
-
     return dispatch => {
+        if(showMessage === true){
 
-        dispatch(messageStart(messageType, messageText));
+            setTimeout(() => {
+                dispatch(messageStart(messageType, messageText));
+                }, 3000);
+            
+            setTimeout(() => {
+                dispatch(resetMessage());
+                }, 6000);
 
-        setTimeout(() => {
-        dispatch(resetMessage());
-        }, 3000)
-  
+        }else {
+            dispatch(messageStart(messageType, messageText));
+
+            setTimeout(() => {
+                dispatch(resetMessage());
+                }, 3000);
+        }
+        
     };
 
 };

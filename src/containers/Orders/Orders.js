@@ -15,12 +15,18 @@ const Orders = (props) => {
         modalButtonDisabled: false,
         modalLoading: false
         });
-
-    useEffect(() => {
-        
-        props.onFetchOrder(props.token, props.userId);
     
-    },[]);
+    const {onFetchOrder, token, userId} = props;
+    
+    useEffect(() => {
+
+        const fetchOrder = () => {
+            onFetchOrder(token, userId);
+        };
+  
+        fetchOrder();
+    
+    },[onFetchOrder, token, userId]);
 
     const showRemoveModal = (orderId) => {
 
@@ -46,7 +52,7 @@ const Orders = (props) => {
 
         removeModalCancel();
 
-        props.onOrderMessage('Danger', 'Your order has been successfully deleted');
+        props.onOrderMessage('Danger', 'Your order has been successfully deleted', props.showMessage);
 
     };
 
@@ -105,7 +111,8 @@ const mapStateToProps = state => {
         token: state.auth.token,
         userId: state.auth.userId,
         deleteOrderLoading: state.order.loadingDeleteOrder,
-        deleteOrderError: state.order.deleteOrderError
+        deleteOrderError: state.order.deleteOrderError,
+        showMessage: state.message.showMessage
     }
 
 }
@@ -115,7 +122,7 @@ const mapDispatchToProps = dispatch => {
     return{
         onFetchOrder: (token, userId) => dispatch(actions.fetchOrders(token, userId)),
         onDeleteOrder: (id,token) => dispatch(actions.deleteOrder(id,token)),
-        onOrderMessage: (type, text) => dispatch(actions.message(type, text))
+        onOrderMessage: (type, text, showMessage) => dispatch(actions.message(type, text, showMessage))
     };
 
 };

@@ -21,26 +21,36 @@ const NavigationItems = (props) => {
 
     let pathname = window.location.pathname.split("/").pop();
     
-    if(pathname == '' || pathname == 'burger'){
+    if(pathname === '' || pathname === 'burger'){
       pathname = '/burger'
     } else {
         pathname = '/';
     };
 
+    let isNotAuth = (
+        <div>
+        <NavigationItem link="/burger" clicked={getPage} page={pathname} exact>Burger Builder</NavigationItem> 
+        <NavigationItem link="/auth" clicked={getPage} page={state.page}>Authenticate</NavigationItem>
+        </div>
+    );
+
+    let isAuth = (
+        <div>
+        <NavigationItem link="/burger" clicked={getPage} page={pathname} exact>Burger Builder</NavigationItem> 
+        <NavigationItem link="/orders" clicked={getPage} page={state.page}>Orders</NavigationItem> 
+        <NavigationItem link="/logout" clicked={getPage} page={state.page}>Logout</NavigationItem>
+        </div>
+    );
+
     return(
         <div>
    
     <ul className={classes.NavigationItems}>
-        <NavigationItem link="/burger" clicked={getPage} page={pathname} exact>Burger Builder</NavigationItem> 
-    
+          
     {props.isAuthenticated ?
-        <NavigationItem link="/orders" clicked={getPage} page={state.page}>Orders</NavigationItem> :null
+        isAuth:isNotAuth
     }
-
-    {!props.isAuthenticated ? 
-       <NavigationItem link="/auth" clicked={getPage} page={state.page}>Authenticate</NavigationItem>:
-       <NavigationItem link="/logout" clicked={getPage} page={state.page}>Logout</NavigationItem>
-    }
+   
     </ul>
    
     </div>

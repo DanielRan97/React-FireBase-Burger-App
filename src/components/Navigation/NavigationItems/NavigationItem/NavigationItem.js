@@ -6,7 +6,7 @@ const NavigationItem = (props) => {
 
   return(
 
-    <li className={props.link == props.page ? classes.NavigationItemSelected : classes.NavigationItem}>
+    <li className={props.link === props.page ? classes.NavigationItemSelected : classes.NavigationItem}>
     <NavLink 
      to={props.link}
      onClick={() => props.clicked(props.link)}

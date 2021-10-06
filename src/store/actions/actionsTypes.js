@@ -26,8 +26,11 @@ export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
-export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
+export const DIDNT_AUTH_NOW = 'DIDNT_AUTH_NOW';
 export const STOP_AUTH_PURCHASE = 'STOP_AUTH_PURCHASE';
+
+//User
+export const UPDATE_AUTH_CURRENT_USER = 'UPDATE_AUTH_CURRENT_USER';
 
 //Message
 export const MESSAGE = 'MESSAGE';

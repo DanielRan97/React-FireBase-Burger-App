@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -11,25 +11,65 @@ import * as actions from '../../store/actions/index';
 const BurgerBuilder = (props) => {
     const [state, setState] = useState({
         purchasing: false,
-        purchasFailed: false,
+        purchasFailed: false
     });
 
-const checkIfAuthPurchase = () => {
+    const {
+        ings,
+        authNow,
+        email,
+        onAuthSuccesMessage,
+        onCheckIfAuthNow,
+        onInitIngredients,
+        authPurchase,
+        buildingBurger,
+        history,
+        showMessage
+    } = props;
 
-   if(props.authPurchase && props.ings !== null && props.buildingBurger !== false){
-         props.history.push('/checkout')
-   } 
-
-};
-
-    useEffect(() => {
-        if(!props.ings){
-            props.onInitIngredients();
-        };
+   
+    const callBackCheckIfAuthPurchase = useCallback(() => {
+    
+        const checkIfAuthPurchase = () => {
+            if(authPurchase && ings !== null && buildingBurger !== false && authNow){        
+                  history.push('/checkout');
+            } ;
+         
+         };
 
         checkIfAuthPurchase();
-    }, []);
+        
+    }, [ authPurchase,
+        authNow,
+        buildingBurger,
+        ings,
+        history]);
 
+    useEffect(() => {
+
+        if(!ings){
+            onInitIngredients();
+        };
+
+        if(authNow === true && email !== undefined){
+    
+            const name  = email.substring(0, email.lastIndexOf("@"));
+            
+            onAuthSuccesMessage('Success', `Hello ${name}, Connected successfully`, showMessage)
+        };
+
+        onCheckIfAuthNow();
+
+        callBackCheckIfAuthPurchase();
+        
+    }, [callBackCheckIfAuthPurchase,
+        ings,
+        authNow,
+        email,
+        onAuthSuccesMessage,
+        onCheckIfAuthNow,
+        onInitIngredients,
+        showMessage]);
  
     const updatePurchaseState = (ingredients) => {
         const sum = Object.keys(ingredients)
@@ -140,7 +180,10 @@ const mapStateToProps = state => {
         isAuthenticated : state.auth.token !== null,
         buildingBurger: state.burgerBuilder.building,
         authRedirectPath: state.auth.authRedirectPath,
-        authPurchase: state.auth.authPurchase
+        authPurchase: state.auth.authPurchase,
+        authNow: state.auth.authNow,
+        email: state.auth.email,
+        showMessage: state.message.showMessage
     };
 }
 
@@ -151,6 +194,8 @@ const mapDispatchToProps = dispatch => {
         onIngredientRemoved: (ingName) => dispatch (actions.removeIngredient(ingName)),
         onInitIngredients: () => dispatch(actions.initIngredients()),
         onInitPurchase : () => dispatch(actions.parchaseInit()),
+        onAuthSuccesMessage: (type, text, showMessage) => dispatch(actions.message(type, text, showMessage)),
+        onCheckIfAuthNow: () => dispatch(actions.didntAuthNow())
     };
 }
 

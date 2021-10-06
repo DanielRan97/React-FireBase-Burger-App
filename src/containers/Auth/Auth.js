@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import classes from './Auth.module.css';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
@@ -91,10 +91,10 @@ const Auth = (props) => {
 
     if(props.isAuthenticated) {
  
-        authRedirect = <Redirect to={props.authRedirectPath} />
+        authRedirect = <Redirect to='/' />
 
     };
-
+ 
     const sumitHandeler = () => {
 
         props.onAuth(state.authForm.email.value, state.authForm.password.value, state.isSignUp);
@@ -135,7 +135,7 @@ const Auth = (props) => {
     
 };
 
-const mapStarteToPros = state => {
+const mapStateToPros = state => {
 
     return {
         ings: state.burgerBuilder.ingredients,
@@ -143,6 +143,7 @@ const mapStarteToPros = state => {
         error: state.auth.error,
         isAuthenticated: state.auth.token !== null,
         buildingBurger: state.burgerBuilder.building,
+        email: state.auth.email
     }
 
 }
@@ -154,4 +155,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStarteToPros, mapDispatchToProps) (withClass(Auth, classes.Auth));
+export default connect(mapStateToPros, mapDispatchToProps) (withClass(Auth, classes.Auth));
