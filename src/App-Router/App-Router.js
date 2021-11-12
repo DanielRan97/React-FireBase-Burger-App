@@ -1,5 +1,5 @@
 import Aux from '../hoc/Auxiliary/Auxiliary';
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom';
 import asyncComponent from '../hoc/asyncComponent/asyncComponent';
 import PageNotFound from '../components/Error-Page/Page-not-found/PageNotFound';
 import { connect } from 'react-redux';
